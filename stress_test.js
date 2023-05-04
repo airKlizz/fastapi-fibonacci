@@ -25,7 +25,7 @@ export let options = {
 };
 
 export default function () {
-    const BASE_URL = 'http://127.0.0.1:4000';
+    const BASE_URL = 'http://fastapi:80';
     const FIBONACCI_NUMBER = 20;
     const stage = __VU * 3 + __ITER;
 

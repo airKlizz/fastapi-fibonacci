@@ -41,3 +41,20 @@ The FastAPI application should now be running inside a Docker container. You can
    ```
    k6 run stress_test.js
    ```
+
+### Running the K6 performance tests under the eye of scaphandre + prometheus + grafana
+
+> You need docker-compose installed on your machine [doc](https://docs.docker.com.zh.xy2401.com/v17.12/compose/install/)
+
+1. Go into docker-compose folder
+```
+cd ./docker-compose
+```
+2. Launch docker-compose with the "docker-compose.yaml" in the folder
+```
+docker-compose up
+docker-compose up -d (for background exec)
+```
+3. Head to localhost:3000 and sign with admin / secret
+4. Navigate on "Filtered process" and filter on top with "k6"
+
