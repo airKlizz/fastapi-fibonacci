@@ -18,6 +18,7 @@ services:
       - type: bind
         source: "./dashboards/sample-dashboard.json"
         target: "/var/lib/grafana/dashboards/sample/sample-dashboard.json"
+
   scaphandre:
     image: hubblo/scaphandre
     ports: 
@@ -58,6 +59,11 @@ services:
       - scaphandre-network
     volumes:
       - ../:/home/k6
+    depends_on:
+      - scaphandre
+      - prometheus
+      - fastapi
+    restart: "no"
 
 volumes:
   promdata-scaphandre:
