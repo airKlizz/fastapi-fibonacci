@@ -1,11 +1,16 @@
 # config file version
 apiVersion: 1
 
+deleteDatasources:
+  - name: Prometheus-scaph
+    orgId: 1
 
 datasources:
   # <string, required> name of the datasource. Required
 - name: Prometheus-scaph
   # <string, required> datasource type. Required
+  jsonData:
+    timeInterval: "5s"
   type: prometheus
   # <string, required> access mode. direct or proxy. Required
   access: proxy
