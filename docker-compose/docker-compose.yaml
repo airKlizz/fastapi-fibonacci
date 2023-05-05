@@ -34,9 +34,11 @@ services:
     networks:
       - scaphandre-network
     
+  # This service name and port is referenced in k6.env
   prometheus:
     build:
       context: ./prom
+    command: --web.enable-remote-write-receiver --config.file=/etc/prometheus/prometheus.yml
     ports: 
       - "9090:9090"
     volumes: 
@@ -54,15 +56,19 @@ services:
 
   k6:
     image: grafana/k6
-    command: ['run', 'stress_test.js']
+    command: ['run', '-o', 'experimental-prometheus-rw', 'stress_test.js']
     networks:
       - scaphandre-network
+    env_file:
+      - k6.env
     volumes:
       - ../:/home/k6
     depends_on:
       - scaphandre
       - prometheus
       - fastapi
+    ports:
+      - "4100:80"
     restart: "no"
 
 volumes:
