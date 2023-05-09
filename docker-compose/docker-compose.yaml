@@ -55,20 +55,14 @@ services:
       - scaphandre-network
 
   k6:
-    image: grafana/k6
-    command:
-      [
-        'run',
-        '-o',
-        'experimental-prometheus-rw',
-        'test/inefficient_fibonacci.js'
-      ]
+    build:
+      context: ./k6
     networks:
       - scaphandre-network
     env_file:
       - k6.env
     volumes:
-      - ../:/home/k6
+      - ../test/:/home/k6
     depends_on:
       - scaphandre
       - prometheus

@@ -9,6 +9,6 @@ export let options = {
 };
 
 export default function () {
-    scenarios.add(1, {scenario: "inefficient"})
-    http.get(`${__ENV.BASE_URL}/inefficient_fibonacci/${__ENV.FIBONACCI_NUMBER}`);
+    scenarios.add(1, {scenario: "efficient"})
+    http.get(`${__ENV.BASE_URL}/efficient_fibonacci/${__ENV.FIBONACCI_NUMBER}`);
 }
