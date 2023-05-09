@@ -10,7 +10,7 @@ services:
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: "/var/lib/grafana/dashboards/sample/sample-dashboard.json"
     depends_on:
       - prometheus
-    ports: 
+    ports:
       - "3000:3000"
     networks:
       - scaphandre-network
@@ -21,7 +21,7 @@ services:
 
   scaphandre:
     image: hubblo/scaphandre
-    ports: 
+    ports:
       - "8080:8080"
     volumes:
       - type: bind
@@ -30,33 +30,39 @@ services:
       - type: bind
         source: /sys/class/powercap
         target: /sys/class/powercap
-    command: ["prometheus"]                         
+    command: [ "prometheus" ]
     networks:
       - scaphandre-network
-    
+
   # This service name and port is referenced in k6.env
   prometheus:
     build:
       context: ./prom
     command: --web.enable-remote-write-receiver --config.file=/etc/prometheus/prometheus.yml
-    ports: 
+    ports:
       - "9090:9090"
-    volumes: 
-      - promdata-scaphandre:/prometheus 
+    volumes:
+      - promdata-scaphandre:/prometheus
     networks:
       - scaphandre-network
 
   fastapi:
     build:
       context: ../
-    ports: 
+    ports:
       - "4000:80"
     networks:
       - scaphandre-network
 
   k6:
     image: grafana/k6
-    command: ['run', '-o', 'experimental-prometheus-rw', 'stress_test.js']
+    command:
+      [
+        'run',
+        '-o',
+        'experimental-prometheus-rw',
+        'test/inefficient_fibonacci.js'
+      ]
     networks:
       - scaphandre-network
     env_file:
@@ -73,6 +79,7 @@ services:
 
 volumes:
   promdata-scaphandre:
+
 
 networks:
   scaphandre-network:
