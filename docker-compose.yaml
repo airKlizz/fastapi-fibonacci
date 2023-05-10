@@ -56,7 +56,7 @@ services:
     env_file:
       - k6/k6.env
     volumes:
-      - k6/tests/:/home/k6
+      - ./k6/tests/:/home/k6
     depends_on:
       - scaphandre
       - prometheus
