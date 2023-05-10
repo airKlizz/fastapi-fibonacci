@@ -7,17 +7,12 @@ services:
       context: ./grafana
     environment:
       GF_SECURITY_ADMIN_PASSWORD: "secret"
-      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: "/var/lib/grafana/dashboards/sample/sample-dashboard.json"
     depends_on:
       - prometheus
     ports:
       - "3000:3000"
     networks:
       - scaphandre-network
-    volumes:
-      - type: bind
-        source: "./dashboards/sample-dashboard.json"
-        target: "/var/lib/grafana/dashboards/sample/sample-dashboard.json"
 
   scaphandre:
     image: hubblo/scaphandre
@@ -34,7 +29,6 @@ services:
     networks:
       - scaphandre-network
 
-  # This service name and port is referenced in k6.env
   prometheus:
     build:
       context: ./prom
@@ -48,7 +42,7 @@ services:
 
   fastapi:
     build:
-      context: ../
+      context: ./fastapi
     ports:
       - "4000:80"
     networks:
@@ -60,9 +54,9 @@ services:
     networks:
       - scaphandre-network
     env_file:
-      - k6.env
+      - k6/k6.env
     volumes:
-      - ../test/:/home/k6
+      - k6/tests/:/home/k6
     depends_on:
       - scaphandre
       - prometheus
@@ -70,6 +64,15 @@ services:
     ports:
       - "4100:80"
     restart: "no"
+
+  exporter:
+    build:
+      context: ./exporter
+    networks:
+      - scaphandre-network
+    depends_on:
+      k6:
+        condition: service_completed_successfully
 
 volumes:
   promdata-scaphandre:
