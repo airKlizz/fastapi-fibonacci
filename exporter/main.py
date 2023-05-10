@@ -44,15 +44,15 @@ for scenario in scenarios:
 
         # Separate timestamps and actual values
         timestamps, values = zip(*values)
-        
+
         values = np.array(values, dtype=float)
-        
+
         # Sum values to obtain energy in Joules (works because step = 1s)
         total_energy_joules = np.sum(values) / 1000000
 
         # Convert to watt-hours
         total_energy_wh = total_energy_joules / 3600
 
-        print(f'{scenario} -> {total_energy_wh:.3f} Wh')
+        print(f'{scenario} -> {total_energy_wh:.5f} Wh')
     else:
         print(f'Request failed with status code {response.status_code}')
