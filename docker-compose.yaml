@@ -43,6 +43,8 @@ services:
   fastapi:
     build:
       context: ./fastapi
+    environment:
+      - CPULIMIT=50
     ports:
       - "4000:80"
     networks:

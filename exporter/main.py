@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 # Define the endpoint and query
 prometheus_endpoint = 'http://prometheus:9090/api/v1/query_range'
-prometheus_query = 'scaph_process_power_consumption_microwatts{{exe="uvicorn"}} * on() clamp_max(changes(k6_scenarios_total{{scenario="{scenario}"}}[1m] offset -30s), 1) + on() vector(0) or on() vector(0)'
+prometheus_query = 'scaph_process_power_consumption_microwatts{{exe="uvicorn"}} * on() clamp_max(changes(k6_scenarios_total{{scenario="{scenario}"}}[20s] offset -10s), 1) + on() vector(0) or on() vector(0)'
 
 # Define the time range
 end_time = datetime.now()
@@ -53,6 +53,6 @@ for scenario in scenarios:
         # Convert to watt-hours
         total_energy_wh = total_energy_joules / 3600
 
-        print(f'{scenario} -> {total_energy_wh:.3f} Wh')
+        print(f'{scenario} -> {total_energy_wh:.10f} Wh')
     else:
         print(f'Request failed with status code {response.status_code}')

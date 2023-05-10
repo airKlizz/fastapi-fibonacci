@@ -8,26 +8,26 @@ export let options = {
         efficient: {
             executor: 'shared-iterations',
             exec: 'efficient',
-            vus: 1000,
-            iterations: 20000,
+            vus: __ENV.VUS,
+            iterations: __ENV.ITERATIONS,
         },
         inefficient: {
             executor: 'shared-iterations',
             exec: 'inefficient',
-            vus: 1000,
-            iterations: 20000,
+            vus: __ENV.VUS,
+            iterations: __ENV.ITERATIONS,
         },
         memoized: {
             executor: 'shared-iterations',
             exec: 'memoized',
-            vus: 1000,
-            iterations: 20000,
+            vus: __ENV.VUS,
+            iterations: __ENV.ITERATIONS,
         },
         inefficient_cpu_intensive: {
             executor: 'shared-iterations',
             exec: 'inefficient_cpu_intensive',
-            vus: 1000,
-            iterations: 20000,
+            vus: __ENV.VUS,
+            iterations: __ENV.ITERATIONS,
         }
     }
 };
