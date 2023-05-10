@@ -36,4 +36,7 @@ scrape_configs:
     static_configs:
       - targets: ['scaphandre:8080']
 
-
+  - job_name: 'app_exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['fastapi:9100']
